@@ -25,7 +25,7 @@ function CoinReveal({ coin }: { coin: Coin }) {
   const isRare = coin.tier === "rare";
 
   return (
-    <div className="relative w-full flex flex-col items-center gap-5">
+    <div className="relative w-full flex flex-col items-center gap-4">
       {/* Pulsing bg glow */}
       <motion.div
         className="absolute inset-0 pointer-events-none"
@@ -90,7 +90,7 @@ function CoinReveal({ coin }: { coin: Coin }) {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
-        className="relative z-10 text-center flex flex-col gap-1"
+        className="relative z-10 text-center flex flex-col gap-1 w-full px-2"
       >
         <div className="flex items-center justify-center">
           <span
@@ -100,9 +100,14 @@ function CoinReveal({ coin }: { coin: Coin }) {
             #{coin.rank} orynth.dev
           </span>
         </div>
-        <h2 className="text-5xl font-black text-white tracking-tight leading-none mt-1">{coin.name}</h2>
+        <h2
+          className="font-black text-white tracking-tight leading-none mt-1"
+          style={{ fontSize: "clamp(26px, 8vw, 48px)" }}
+        >
+          {coin.name}
+        </h2>
         <p className="text-sm font-mono text-white/35 tracking-wider">{coin.symbol}</p>
-        <p className="text-sm text-white/50 mt-1 max-w-[240px] mx-auto leading-snug">{coin.description}</p>
+        <p className="text-sm text-white/50 mt-1 leading-snug">{coin.description}</p>
       </motion.div>
 
       {/* Stats */}
@@ -110,20 +115,20 @@ function CoinReveal({ coin }: { coin: Coin }) {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.45 }}
-        className="relative z-10 flex gap-2.5 w-full"
+        className="relative z-10 flex gap-2 w-full"
       >
         {[
-          { label: "Market Cap", value: coin.marketCap, color: "#22C55E" },
+          { label: "Mkt Cap", value: coin.marketCap, color: "#22C55E" },
           { label: "Rank", value: `#${coin.rank}`, color: "#fff" },
           { label: "Tier", value: TIER_LABELS[coin.tier], color: tierColor },
         ].map(({ label, value, color }) => (
           <div
             key={label}
-            className="flex-1 flex flex-col items-center gap-0.5 py-2.5 rounded-2xl"
+            className="flex-1 flex flex-col items-center gap-0.5 py-2 rounded-2xl min-w-0"
             style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)" }}
           >
-            <span className="text-[8px] font-black uppercase tracking-widest text-white/25">{label}</span>
-            <span className="text-sm font-black" style={{ color }}>{value}</span>
+            <span className="text-[8px] font-black uppercase tracking-widest text-white/25 truncate w-full text-center px-1">{label}</span>
+            <span className="text-xs font-black truncate w-full text-center px-1" style={{ color }}>{value}</span>
           </div>
         ))}
       </motion.div>
@@ -160,10 +165,10 @@ function MysteryBox({ index, coin, isRevealed, isLocked, onClick, packColor, pac
       onClick={onClick}
       disabled={isRevealed || isLocked}
       data-testid={`button-box-${index}`}
-      className="relative flex flex-col items-center justify-center overflow-hidden"
+      className="relative flex flex-col items-center justify-center overflow-hidden flex-1"
       style={{
-        width: 104,
-        height: 126,
+        maxWidth: 104,
+        aspectRatio: "104 / 126",
         borderRadius: 18,
         background: bg,
         border: isRevealed
@@ -185,11 +190,11 @@ function MysteryBox({ index, coin, isRevealed, isLocked, onClick, packColor, pac
           initial={{ scale: 0.5, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ type: "spring", damping: 14 }}
-          className="flex flex-col items-center gap-2"
+          className="flex flex-col items-center gap-1.5 p-1"
         >
-          <CoinAvatar coin={coin} size="md" showGlow />
-          <div className="text-center">
-            <p className="text-[9px] font-black text-white leading-tight">{coin.name}</p>
+          <CoinAvatar coin={coin} size="sm" showGlow />
+          <div className="text-center px-1">
+            <p className="text-[9px] font-black text-white leading-tight truncate max-w-full">{coin.name}</p>
             <p
               className="text-[7px] font-black uppercase px-1.5 py-0.5 rounded-md mt-0.5"
               style={{ color: tierColor, background: `${tierColor}18` }}
@@ -207,15 +212,15 @@ function MysteryBox({ index, coin, isRevealed, isLocked, onClick, packColor, pac
                 style={{ background: "linear-gradient(145deg, rgba(255,255,255,0.08) 0%, transparent 60%)" }}
               />
               <div
-                className="w-12 h-12 rounded-2xl flex items-center justify-center"
+                className="w-10 h-10 rounded-2xl flex items-center justify-center"
                 style={{
                   background: `linear-gradient(145deg, ${packColor}30, ${packColor}10)`,
                   border: `1.5px solid ${packColor}40`,
                 }}
               >
-                <span className="text-2xl font-black" style={{ color: packColor }}>?</span>
+                <span className="text-xl font-black" style={{ color: packColor }}>?</span>
               </div>
-              <p className="text-[8px] font-bold mt-2 text-white/30">Box {index + 1}</p>
+              <p className="text-[8px] font-bold mt-1.5 text-white/30">Box {index + 1}</p>
             </>
           )}
         </>
@@ -327,17 +332,17 @@ export default function SwapPage() {
       <div className="flex items-center justify-between px-5 pt-4 pb-3 flex-shrink-0 relative z-30">
         <button
           onClick={() => navigate("/")}
-          className="w-9 h-9 rounded-full flex items-center justify-center"
+          className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0"
           style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.1)" }}
         >
           <ArrowLeft className="w-4 h-4 text-white/70" />
         </button>
-        <div className="text-center">
+        <div className="text-center min-w-0 mx-3">
           <p className="text-[9px] uppercase tracking-[0.2em] font-bold opacity-35">Opening</p>
-          <p className="text-sm font-black text-white">{pack.name}</p>
+          <p className="text-sm font-black text-white truncate">{pack.name}</p>
         </div>
         <div
-          className="px-3 py-1 rounded-full text-xs font-black"
+          className="px-3 py-1 rounded-full text-xs font-black flex-shrink-0"
           style={{ background: `${pack.accentColor}20`, color: pack.accentColor, border: `1px solid ${pack.accentColor}40` }}
         >
           {pack.cost} W
@@ -396,8 +401,8 @@ export default function SwapPage() {
               <motion.div
                 className="relative overflow-hidden flex flex-col items-center justify-end pb-4"
                 style={{
-                  width: 220,
-                  height: 140,
+                  width: "min(220px, 58vw)",
+                  height: "min(140px, 37vw)",
                   borderTopLeftRadius: 24,
                   borderTopRightRadius: 24,
                   background: `linear-gradient(170deg, ${pack.accentColor}30 0%, ${pack.accentColor}08 100%)`,
@@ -433,7 +438,7 @@ export default function SwapPage() {
                 >
                   {PACK_SERIES[pack.id]}
                 </p>
-                <p className="font-black text-white text-3xl leading-none relative z-10 tracking-tight">
+                <p className="font-black text-white text-2xl leading-none relative z-10 tracking-tight">
                   {pack.name.replace(" Pack", "").toUpperCase()}
                 </p>
               </motion.div>
@@ -441,7 +446,7 @@ export default function SwapPage() {
               {/* Seam light */}
               <motion.div
                 style={{
-                  width: 220,
+                  width: "min(220px, 58vw)",
                   height: 3,
                   background: `linear-gradient(90deg, transparent, ${pack.accentColor}, transparent)`,
                   boxShadow: `0 0 12px ${pack.accentColor}, 0 0 24px ${pack.accentColor}80`,
@@ -459,8 +464,8 @@ export default function SwapPage() {
                 <motion.div
                   className="relative overflow-hidden flex flex-col items-center justify-start pt-4"
                   style={{
-                    width: 220,
-                    height: 160,
+                    width: "min(220px, 58vw)",
+                    height: "min(160px, 42vw)",
                     borderBottomLeftRadius: 24,
                     borderBottomRightRadius: 24,
                     background: `linear-gradient(170deg, ${pack.accentColor}20 0%, ${pack.accentColor}05 100%)`,
@@ -488,7 +493,7 @@ export default function SwapPage() {
                     className="relative z-10"
                   >
                     <div
-                      className="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl"
+                      className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl"
                       style={{
                         background: `linear-gradient(145deg, ${pack.accentColor}35, ${pack.accentColor}10)`,
                         border: `1.5px solid ${pack.accentColor}50`,
@@ -527,7 +532,7 @@ export default function SwapPage() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             transition={{ duration: 0.2 }}
-            className="flex-1 flex flex-col items-center justify-center px-5 gap-6"
+            className="flex-1 flex flex-col items-center justify-center px-4 gap-5"
           >
             <motion.div
               className="text-center"
@@ -539,7 +544,7 @@ export default function SwapPage() {
               <p className="text-white/25 text-xs mt-0.5">The others stay hidden forever</p>
             </motion.div>
 
-            <div className="flex flex-col gap-3 w-full">
+            <div className="flex flex-col gap-3 w-full max-w-sm">
               {/* Row 1: boxes 0, 1 */}
               <div className="flex gap-3 justify-center">
                 {[0, 1].map((i) => (
@@ -590,7 +595,7 @@ export default function SwapPage() {
             key="reveal"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="flex-1 flex flex-col items-center justify-center px-6"
+            className="flex-1 flex flex-col items-center justify-center px-6 overflow-y-auto no-scrollbar py-4"
           >
             <CoinReveal coin={revealedCoin} />
           </motion.div>
