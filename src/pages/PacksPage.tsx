@@ -88,8 +88,8 @@ export default function PacksPage() {
         ))}
       </div>
 
-      {/* Pack card — flex-shrink-0, card sizes to its content (no h-full stretch) */}
-      <div className="relative px-4 flex-shrink-0">
+      {/* Pack card — fills remaining space between tabs and button */}
+      <div className="relative px-4 flex-1 min-h-0">
         <AnimatePresence mode="wait" custom={direction}>
           <motion.div
             key={pack.id}
@@ -98,7 +98,7 @@ export default function PacksPage() {
             animate={{ opacity: 1, x: 0, scale: 1 }}
             exit={{ opacity: 0, x: direction * -70, scale: 0.96 }}
             transition={{ duration: 0.22, ease: "easeOut" }}
-            className="relative rounded-3xl overflow-hidden flex flex-col"
+            className="relative rounded-3xl overflow-hidden h-full flex flex-col"
             style={{ background: PACK_BACKGROUNDS[pack.id] }}
           >
             {/* Noise texture */}
@@ -143,11 +143,14 @@ export default function PacksPage() {
               }}
             />
 
-            {/* Content — stacked naturally, card height = content height */}
-            <div className="relative z-30 flex flex-col px-5 pt-4 pb-4">
+            {/* Content:
+                TOP   fixed — title pinned to top
+                MID   flex-1 — coin section fills and centers in remaining space
+                BOT   fixed — odds bars pinned to bottom */}
+            <div className="relative z-30 flex flex-col h-full px-5 pt-4 pb-4">
 
               {/* TOP: Tag + Cost + Series + Name */}
-              <div>
+              <div className="flex-shrink-0">
                 <div className="flex items-center justify-between mb-2">
                   {pack.tag ? (
                     <div
@@ -197,28 +200,25 @@ export default function PacksPage() {
                 </h1>
               </div>
 
-              {/* MIDDLE: Coin preview — fixed height, sits 12px below title */}
-              <div
-                className="relative flex flex-col items-center justify-center mt-3"
-                style={{ height: "clamp(160px, 26vh, 210px)" }}
-              >
+              {/* MIDDLE: Coins centered in all remaining space */}
+              <div className="flex-1 min-h-0 relative flex flex-col items-center justify-center py-3">
                 {/* Glow ring */}
                 <div
                   className="absolute inset-0 pointer-events-none"
                   style={{
-                    background: `radial-gradient(ellipse at 50% 45%, ${pack.accentColor}28 0%, ${pack.accentColor}08 55%, transparent 75%)`,
-                    filter: "blur(20px)",
+                    background: `radial-gradient(ellipse at 50% 50%, ${pack.accentColor}25 0%, ${pack.accentColor}06 50%, transparent 72%)`,
+                    filter: "blur(16px)",
                   }}
                 />
                 <div
                   className="absolute pointer-events-none rounded-full"
                   style={{
-                    width: "72%",
-                    height: "80%",
-                    top: "10%",
-                    left: "14%",
+                    width: "68%",
+                    height: "75%",
+                    top: "12.5%",
+                    left: "16%",
                     border: `1px solid ${pack.accentColor}20`,
-                    boxShadow: `0 0 30px ${pack.accentColor}15, inset 0 0 30px ${pack.accentColor}08`,
+                    boxShadow: `0 0 28px ${pack.accentColor}15, inset 0 0 28px ${pack.accentColor}08`,
                   }}
                 />
 
@@ -283,13 +283,13 @@ export default function PacksPage() {
                     );
                   })}
                 </div>
-                <p className="text-[9px] font-bold mt-2" style={{ color: `${pack.accentColor}55` }}>
+                <p className="text-[9px] font-bold mt-3" style={{ color: `${pack.accentColor}55` }}>
                   + {moreCount} more coins · 5 mystery boxes
                 </p>
               </div>
 
-              {/* BOTTOM: Drop rates */}
-              <div className="flex gap-2 mt-3">
+              {/* BOTTOM: Drop rates pinned to bottom */}
+              <div className="flex-shrink-0 flex gap-2">
                 <OddsBar label="COM" value={pack.odds.common} color={TIER_COLORS.common} />
                 <OddsBar label="UNC" value={pack.odds.uncommon} color={TIER_COLORS.uncommon} />
                 <OddsBar label="RAR" value={pack.odds.rare} color={TIER_COLORS.rare} />
@@ -299,9 +299,6 @@ export default function PacksPage() {
           </motion.div>
         </AnimatePresence>
       </div>
-
-      {/* Flex spacer — absorbs remaining vertical space, pushes button to bottom */}
-      <div className="flex-1" />
 
       {/* Swap Now button */}
       <div className="flex-shrink-0 px-4 pt-2 pb-3">
