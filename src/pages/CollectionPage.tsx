@@ -30,7 +30,7 @@ function CollectionCoinCard({
   const tierColor = TIER_COLORS[coin.tier];
   return (
     <div
-      className="relative rounded-3xl overflow-hidden"
+      className="relative rounded-2xl overflow-hidden"
       style={{
         background: `linear-gradient(145deg, ${coin.color}12, rgba(0,0,0,0.5))`,
         border: `1px solid ${coin.color}25`,
@@ -38,7 +38,7 @@ function CollectionCoinCard({
     >
       {count > 1 && (
         <div
-          className="absolute top-2.5 right-2.5 z-20 min-w-[22px] h-[22px] px-1.5 rounded-lg flex items-center justify-center text-[9px] font-black"
+          className="absolute top-2 right-2 z-20 min-w-[20px] h-[20px] px-1 rounded-md flex items-center justify-center text-[8px] font-black"
           style={{ background: tierColor, color: "#000", boxShadow: `0 0 8px ${tierColor}60` }}
         >
           ×{count}
@@ -46,13 +46,13 @@ function CollectionCoinCard({
       )}
       {isNew && (
         <div
-          className="absolute top-2.5 right-2.5 z-20 px-1.5 py-0.5 rounded-md text-[8px] font-black uppercase tracking-wider"
+          className="absolute top-2 right-2 z-20 px-1.5 py-0.5 rounded-md text-[8px] font-black uppercase tracking-wider"
           style={{ background: "rgba(255,255,255,0.9)", color: "#000" }}
         >
           NEW
         </div>
       )}
-      <div className="relative z-10 flex flex-col items-center gap-2.5 px-3 pt-8 pb-3.5">
+      <div className="relative z-10 flex flex-col items-center gap-2 px-2 pt-6 pb-3">
         <div className="relative">
           <div
             className="absolute inset-0 rounded-full pointer-events-none blur-lg"
@@ -60,21 +60,21 @@ function CollectionCoinCard({
           />
           <CoinAvatar coin={coin} size="md" showGlow />
         </div>
-        <div className="text-center">
+        <div className="text-center w-full">
           <p
-            className="text-xs font-extrabold text-white leading-tight"
+            className="text-[11px] font-extrabold text-white leading-tight truncate"
             style={{ fontFamily: "var(--app-font-display)" }}
           >
             {coin.name}
           </p>
-          <p className="text-[8px] font-mono text-white/25 mt-0.5 tracking-widest">{coin.symbol}</p>
+          <p className="text-[8px] font-mono text-white/25 mt-0.5 tracking-widest truncate">{coin.symbol}</p>
         </div>
         <div
-          className="w-full flex items-center justify-between pt-2.5"
+          className="w-full flex items-center justify-between pt-2"
           style={{ borderTop: `1px solid ${coin.color}18` }}
         >
           <span
-            className="text-[8px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded-md"
+            className="text-[7px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded-md"
             style={{
               background: `${tierColor}18`,
               color: tierColor,
@@ -83,7 +83,7 @@ function CollectionCoinCard({
           >
             {TIER_LABELS[coin.tier]}
           </span>
-          <span className="text-[9px] font-mono text-green-400 font-bold">{coin.marketCap}</span>
+          <span className="text-[8px] font-mono text-green-400 font-bold truncate ml-1">{coin.marketCap}</span>
         </div>
       </div>
     </div>
@@ -114,7 +114,7 @@ export default function CollectionPage() {
 
   if (state.collection.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[70vh] px-8 gap-6">
+      <div className="flex-1 flex flex-col items-center justify-center px-4 gap-6">
         <motion.div
           animate={{ y: [-4, 4, -4] }}
           transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
@@ -127,7 +127,7 @@ export default function CollectionPage() {
         >
           <PackageOpen className="w-10 h-10 text-white/20" />
         </motion.div>
-        <div className="text-center gap-2 flex flex-col">
+        <div className="text-center flex flex-col gap-2">
           <h2
             className="text-2xl font-extrabold text-white"
             style={{ fontFamily: "var(--app-font-display)" }}
@@ -144,7 +144,7 @@ export default function CollectionPage() {
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.97 }}
           onClick={() => navigate("/")}
-          className="h-13 px-8 rounded-2xl font-bold text-sm text-white flex items-center gap-2 relative overflow-hidden"
+          className="px-8 rounded-2xl font-bold text-sm text-white flex items-center gap-2 relative overflow-hidden"
           style={{
             height: 52,
             background: "linear-gradient(135deg, #8B5CF6, #4F46E5)",
@@ -171,7 +171,7 @@ export default function CollectionPage() {
     <div className="flex-1 overflow-y-auto no-scrollbar">
       {/* Header */}
       <div
-        className="px-5 pt-5 pb-4 relative overflow-hidden"
+        className="px-4 pt-4 pb-4"
         style={{
           background: "linear-gradient(180deg, rgba(124,58,237,0.1) 0%, transparent 100%)",
           borderBottom: "1px solid rgba(255,255,255,0.05)",
@@ -206,7 +206,6 @@ export default function CollectionPage() {
             <p className="text-[9px] uppercase tracking-widest font-bold opacity-60 mt-0.5">Complete</p>
           </div>
         </div>
-        {/* Progress bar */}
         <div className="h-2 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.06)" }}>
           <div
             className="h-full rounded-full transition-all duration-700"
@@ -216,7 +215,7 @@ export default function CollectionPage() {
       </div>
 
       {/* Filter tabs */}
-      <div className="flex gap-2 px-4 pt-4 pb-2 overflow-x-auto no-scrollbar">
+      <div className="flex gap-2 px-4 pt-3 pb-2 overflow-x-auto no-scrollbar">
         {FILTERS.map((f) => {
           const active = filter === f.id;
           const color =
@@ -245,11 +244,11 @@ export default function CollectionPage() {
       </div>
 
       {/* Grid */}
-      <div className="px-4 pb-6">
+      <div className="px-4 pb-6 pt-1">
         {filtered.length === 0 ? (
           <p className="text-center text-white/20 text-sm py-8">No {filter} coins collected yet</p>
         ) : (
-          <div className="grid grid-cols-3 gap-2.5">
+          <div className="grid grid-cols-3 gap-2">
             {filtered.map((entry) => (
               <CollectionCoinCard
                 key={entry.coinId}
