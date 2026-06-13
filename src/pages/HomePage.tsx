@@ -88,19 +88,21 @@ export default function HomePage() {
         </div>
 
         <div className="grid grid-cols-2 gap-3">
-          <Link href="/shop">
-            <a className="flex flex-col items-center justify-center gap-2 p-5 rounded-2xl border border-violet-600/50 bg-violet-900/30 hover:bg-violet-900/50 transition-all duration-200 hover:scale-[1.02] active:scale-95">
-              <span className="text-3xl">🎴</span>
-              <span className="text-sm font-bold text-white">Open Packs</span>
-              <span className="text-xs text-violet-400">from 10 W</span>
-            </a>
+          <Link
+            href="/shop"
+            className="flex flex-col items-center justify-center gap-2 p-5 rounded-2xl border border-violet-600/50 bg-violet-900/30 hover:bg-violet-900/50 transition-all duration-200 hover:scale-[1.02] active:scale-95 no-underline"
+          >
+            <span className="text-3xl">🎴</span>
+            <span className="text-sm font-bold text-white">Open Packs</span>
+            <span className="text-xs text-violet-400">from 10 W</span>
           </Link>
-          <Link href="/collection">
-            <a className="flex flex-col items-center justify-center gap-2 p-5 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-200 hover:scale-[1.02] active:scale-95">
-              <span className="text-3xl">📦</span>
-              <span className="text-sm font-bold text-white">Collection</span>
-              <span className="text-xs text-white/40">{collected} coins</span>
-            </a>
+          <Link
+            href="/collection"
+            className="flex flex-col items-center justify-center gap-2 p-5 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-200 hover:scale-[1.02] active:scale-95 no-underline"
+          >
+            <span className="text-3xl">📦</span>
+            <span className="text-sm font-bold text-white">Collection</span>
+            <span className="text-xs text-white/40">{collected} coins</span>
           </Link>
         </div>
 
@@ -129,10 +131,8 @@ export default function HomePage() {
           </div>
         )}
 
-        <Link href="/info">
-          <a className="block text-center text-xs text-white/25 hover:text-white/50 transition-colors py-2">
-            How to play &rarr;
-          </a>
+        <Link href="/info" className="block text-center text-xs text-white/25 hover:text-white/50 transition-colors py-2 no-underline">
+          How to play →
         </Link>
       </div>
     </div>
