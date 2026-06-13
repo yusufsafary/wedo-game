@@ -68,6 +68,7 @@ export default function PacksPage() {
 
   return (
     <div className="flex-1 flex flex-col min-h-0 overflow-hidden select-none">
+
       {/* Pack tab buttons */}
       <div className="flex gap-2 px-4 pt-3 pb-2.5 overflow-x-auto no-scrollbar flex-shrink-0">
         {PACKS.map((p, i) => (
@@ -87,8 +88,8 @@ export default function PacksPage() {
         ))}
       </div>
 
-      {/* Pack card */}
-      <div className="relative px-4 flex-1 min-h-0">
+      {/* Pack card — flex-shrink-0, card sizes to its content (no h-full stretch) */}
+      <div className="relative px-4 flex-shrink-0">
         <AnimatePresence mode="wait" custom={direction}>
           <motion.div
             key={pack.id}
@@ -97,7 +98,7 @@ export default function PacksPage() {
             animate={{ opacity: 1, x: 0, scale: 1 }}
             exit={{ opacity: 0, x: direction * -70, scale: 0.96 }}
             transition={{ duration: 0.22, ease: "easeOut" }}
-            className="relative rounded-3xl overflow-hidden h-full flex flex-col"
+            className="relative rounded-3xl overflow-hidden flex flex-col"
             style={{ background: PACK_BACKGROUNDS[pack.id] }}
           >
             {/* Noise texture */}
@@ -142,15 +143,11 @@ export default function PacksPage() {
               }}
             />
 
-            {/* Content layout:
-                TOP  → title (fixed height, flex-shrink-0)
-                MID  → coins section (fixed height, flex-shrink-0, sits right under title)
-                GAP  → flex-1 spacer (absorbs leftover space)
-                BOT  → odds bars (fixed height, flex-shrink-0) */}
-            <div className="relative z-30 flex flex-col h-full px-5 pt-4 pb-4">
+            {/* Content — stacked naturally, card height = content height */}
+            <div className="relative z-30 flex flex-col px-5 pt-4 pb-4">
 
               {/* TOP: Tag + Cost + Series + Name */}
-              <div className="flex-shrink-0">
+              <div>
                 <div className="flex items-center justify-between mb-2">
                   {pack.tag ? (
                     <div
@@ -191,7 +188,7 @@ export default function PacksPage() {
                   style={{
                     fontFamily: "var(--app-font-display)",
                     fontWeight: 800,
-                    fontSize: "clamp(32px, 8vw, 48px)",
+                    fontSize: "clamp(30px, 7.5vw, 46px)",
                     textShadow: `0 0 40px ${pack.accentColor}50`,
                     letterSpacing: "-0.02em",
                   }}
@@ -200,10 +197,10 @@ export default function PacksPage() {
                 </h1>
               </div>
 
-              {/* MIDDLE: Coin preview — fixed height, sits right below title */}
+              {/* MIDDLE: Coin preview — fixed height, sits 12px below title */}
               <div
-                className="flex-shrink-0 relative flex flex-col items-center justify-center mt-4"
-                style={{ height: "clamp(170px, 30vh, 240px)" }}
+                className="relative flex flex-col items-center justify-center mt-3"
+                style={{ height: "clamp(160px, 26vh, 210px)" }}
               >
                 {/* Glow ring */}
                 <div
@@ -232,8 +229,8 @@ export default function PacksPage() {
                       <motion.div
                         key={coin.id}
                         className="flex flex-col items-center gap-1.5"
-                        style={{ marginBottom: isCenter ? 14 : 0, zIndex: isCenter ? 2 : 1 }}
-                        animate={{ y: [0, isCenter ? -8 : -5, 0] }}
+                        style={{ marginBottom: isCenter ? 12 : 0, zIndex: isCenter ? 2 : 1 }}
+                        animate={{ y: [0, isCenter ? -7 : -4, 0] }}
                         transition={{
                           repeat: Infinity,
                           duration: isCenter ? 3.2 : 3.8 + i * 0.4,
@@ -291,11 +288,8 @@ export default function PacksPage() {
                 </p>
               </div>
 
-              {/* GAP: absorbs all extra height so odds bars stay at bottom */}
-              <div className="flex-1" />
-
-              {/* BOTTOM: Drop rates — always pinned to bottom of card */}
-              <div className="flex-shrink-0 flex gap-2">
+              {/* BOTTOM: Drop rates */}
+              <div className="flex gap-2 mt-3">
                 <OddsBar label="COM" value={pack.odds.common} color={TIER_COLORS.common} />
                 <OddsBar label="UNC" value={pack.odds.uncommon} color={TIER_COLORS.uncommon} />
                 <OddsBar label="RAR" value={pack.odds.rare} color={TIER_COLORS.rare} />
@@ -306,8 +300,11 @@ export default function PacksPage() {
         </AnimatePresence>
       </div>
 
+      {/* Flex spacer — absorbs remaining vertical space, pushes button to bottom */}
+      <div className="flex-1" />
+
       {/* Swap Now button */}
-      <div className="flex-shrink-0 px-4 pt-2.5 pb-3">
+      <div className="flex-shrink-0 px-4 pt-2 pb-3">
         <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.96 }}
