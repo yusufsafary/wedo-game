@@ -142,7 +142,11 @@ export default function PacksPage() {
               }}
             />
 
-            {/* Content — flex-col, middle takes flex-1 so it grows into available space */}
+            {/* Content layout:
+                TOP  → title (fixed height, flex-shrink-0)
+                MID  → coins section (fixed height, flex-shrink-0, sits right under title)
+                GAP  → flex-1 spacer (absorbs leftover space)
+                BOT  → odds bars (fixed height, flex-shrink-0) */}
             <div className="relative z-30 flex flex-col h-full px-5 pt-4 pb-4">
 
               {/* TOP: Tag + Cost + Series + Name */}
@@ -196,31 +200,29 @@ export default function PacksPage() {
                 </h1>
               </div>
 
-              {/* MIDDLE: Preview coins — flex-1 fills all remaining space between top and bottom */}
-              <div className="flex-1 min-h-0 relative flex flex-col items-center justify-center py-2">
+              {/* MIDDLE: Coin preview — fixed height, sits right below title */}
+              <div
+                className="flex-shrink-0 relative flex flex-col items-center justify-center mt-4"
+                style={{ height: "clamp(170px, 30vh, 240px)" }}
+              >
                 {/* Glow ring */}
                 <div
                   className="absolute inset-0 pointer-events-none"
                   style={{
-                    borderRadius: "50%",
-                    background: `radial-gradient(ellipse at 50% 45%, ${pack.accentColor}30 0%, ${pack.accentColor}08 45%, transparent 70%)`,
-                    filter: "blur(18px)",
+                    background: `radial-gradient(ellipse at 50% 45%, ${pack.accentColor}28 0%, ${pack.accentColor}08 55%, transparent 75%)`,
+                    filter: "blur(20px)",
                   }}
                 />
                 <div
                   className="absolute pointer-events-none rounded-full"
                   style={{
-                    width: "70%",
-                    height: "70%",
-                    top: "15%",
-                    left: "15%",
+                    width: "72%",
+                    height: "80%",
+                    top: "10%",
+                    left: "14%",
                     border: `1px solid ${pack.accentColor}20`,
                     boxShadow: `0 0 30px ${pack.accentColor}15, inset 0 0 30px ${pack.accentColor}08`,
                   }}
-                />
-                <div
-                  className="absolute pointer-events-none rounded-full"
-                  style={{ width: "45%", height: "45%", top: "27.5%", left: "27.5%", border: `1px solid ${pack.accentColor}15` }}
                 />
 
                 <div className="flex items-end justify-center gap-4 w-full px-2">
@@ -230,7 +232,7 @@ export default function PacksPage() {
                       <motion.div
                         key={coin.id}
                         className="flex flex-col items-center gap-1.5"
-                        style={{ marginBottom: isCenter ? 16 : 0, zIndex: isCenter ? 2 : 1 }}
+                        style={{ marginBottom: isCenter ? 14 : 0, zIndex: isCenter ? 2 : 1 }}
                         animate={{ y: [0, isCenter ? -8 : -5, 0] }}
                         transition={{
                           repeat: Infinity,
@@ -284,12 +286,15 @@ export default function PacksPage() {
                     );
                   })}
                 </div>
-                <p className="text-[9px] font-bold mt-3" style={{ color: `${pack.accentColor}55` }}>
+                <p className="text-[9px] font-bold mt-2" style={{ color: `${pack.accentColor}55` }}>
                   + {moreCount} more coins · 5 mystery boxes
                 </p>
               </div>
 
-              {/* BOTTOM: Drop rates */}
+              {/* GAP: absorbs all extra height so odds bars stay at bottom */}
+              <div className="flex-1" />
+
+              {/* BOTTOM: Drop rates — always pinned to bottom of card */}
               <div className="flex-shrink-0 flex gap-2">
                 <OddsBar label="COM" value={pack.odds.common} color={TIER_COLORS.common} />
                 <OddsBar label="UNC" value={pack.odds.uncommon} color={TIER_COLORS.uncommon} />
