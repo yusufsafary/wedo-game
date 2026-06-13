@@ -75,7 +75,7 @@ const PACK_TIERS = [
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex items-center gap-3 mb-2.5">
+    <div className="flex items-center gap-3 mb-3">
       <p className="text-[9px] uppercase tracking-[0.25em] font-black text-white/20 whitespace-nowrap">
         {children}
       </p>
@@ -86,10 +86,10 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 
 export default function AboutPage() {
   return (
-    <div className="flex-1 overflow-y-auto no-scrollbar flex flex-col gap-0">
+    <div className="flex-1 overflow-y-auto no-scrollbar">
       {/* Hero */}
       <section
-        className="relative flex flex-col items-center justify-center px-6 py-12 overflow-hidden"
+        className="relative flex flex-col items-center justify-center px-4 py-10 overflow-hidden"
         style={{
           background: `
             radial-gradient(ellipse 90% 60% at 50% 0%, rgba(124,58,237,0.18) 0%, transparent 65%),
@@ -103,7 +103,7 @@ export default function AboutPage() {
           transition={{ type: "spring", damping: 18, stiffness: 160 }}
           className="flex flex-col items-center gap-3 text-center"
         >
-          <WedoLogo size={56} glowOpacity={0.5} />
+          <WedoLogo size={52} glowOpacity={0.5} />
           <div>
             <h1 className="font-display text-4xl font-extrabold text-white tracking-tight">WEDO</h1>
             <p className="text-sm font-medium text-white/40 mt-0.5">The Orynth Coin Exchange</p>
@@ -115,7 +115,7 @@ export default function AboutPage() {
         </motion.div>
       </section>
 
-      <div className="px-5 flex flex-col gap-8 pb-10">
+      <div className="px-4 flex flex-col gap-8 pb-8">
         {/* How to Play */}
         <div>
           <SectionLabel>How to Play</SectionLabel>
@@ -139,7 +139,7 @@ export default function AboutPage() {
                 >
                   {step.icon}
                 </div>
-                <div className="flex-1">
+                <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-0.5">
                     <span
                       className="text-[9px] font-black uppercase tracking-widest"
@@ -268,7 +268,7 @@ export default function AboutPage() {
           </div>
         </div>
 
-        <p className="text-center text-[10px] text-white/15 font-medium tracking-wide">
+        <p className="text-center text-[10px] text-white/15 font-medium tracking-wide pb-2">
           Coin data powered by{" "}
           <a
             href="https://orynth.dev"
