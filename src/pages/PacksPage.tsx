@@ -69,7 +69,7 @@ export default function PacksPage() {
   return (
     <div className="flex-1 flex flex-col min-h-0 overflow-hidden select-none">
       {/* Pack tab buttons */}
-      <div className="flex gap-2 px-4 pt-4 pb-3 overflow-x-auto no-scrollbar flex-shrink-0">
+      <div className="flex gap-2 px-4 pt-3 pb-2.5 overflow-x-auto no-scrollbar flex-shrink-0">
         {PACKS.map((p, i) => (
           <button
             key={p.id}
@@ -142,15 +142,15 @@ export default function PacksPage() {
               }}
             />
 
-            {/* Content — justify-between distributes space evenly between 3 sections */}
-            <div className="relative z-30 flex flex-col h-full px-6 pt-5 pb-5 justify-between">
+            {/* Content — flex-col, middle takes flex-1 so it grows into available space */}
+            <div className="relative z-30 flex flex-col h-full px-5 pt-4 pb-4">
 
-              {/* TOP: Tag + Cost + Series + Name grouped together */}
+              {/* TOP: Tag + Cost + Series + Name */}
               <div className="flex-shrink-0">
-                <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center justify-between mb-2">
                   {pack.tag ? (
                     <div
-                      className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest"
+                      className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-widest"
                       style={{
                         color: pack.accentColor,
                         border: `1px solid ${pack.accentColor}55`,
@@ -163,21 +163,21 @@ export default function PacksPage() {
                     <div />
                   )}
                   <div
-                    className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl font-black"
+                    className="flex items-center gap-1.5 px-3 py-1 rounded-xl font-black"
                     style={{
                       background: `${pack.accentColor}22`,
                       border: `1.5px solid ${pack.accentColor}60`,
                       color: "#fff",
                       boxShadow: `0 2px 16px ${pack.glowColor}`,
-                      fontSize: 13,
+                      fontSize: 12,
                     }}
                   >
-                    <span style={{ color: pack.accentColor, fontSize: 11 }}>⚡</span>
+                    <span style={{ color: pack.accentColor, fontSize: 10 }}>⚡</span>
                     <span>{pack.cost === 0 ? "FREE" : `${pack.cost.toLocaleString()} W`}</span>
                   </div>
                 </div>
                 <p
-                  className="font-black uppercase tracking-[0.3em] mb-1.5"
+                  className="font-black uppercase tracking-[0.3em] mb-1"
                   style={{ color: `${pack.accentColor}75`, fontSize: 9 }}
                 >
                   {PACK_SERIES[pack.id]}
@@ -187,7 +187,7 @@ export default function PacksPage() {
                   style={{
                     fontFamily: "var(--app-font-display)",
                     fontWeight: 800,
-                    fontSize: "clamp(36px,9vw,52px)",
+                    fontSize: "clamp(32px, 8vw, 48px)",
                     textShadow: `0 0 40px ${pack.accentColor}50`,
                     letterSpacing: "-0.02em",
                   }}
@@ -196,11 +196,8 @@ export default function PacksPage() {
                 </h1>
               </div>
 
-              {/* MIDDLE: Preview coins — fixed height, no flex-1 */}
-              <div
-                className="flex-shrink-0 relative flex flex-col items-center justify-center"
-                style={{ height: "clamp(180px, 36vh, 260px)" }}
-              >
+              {/* MIDDLE: Preview coins — flex-1 fills all remaining space between top and bottom */}
+              <div className="flex-1 min-h-0 relative flex flex-col items-center justify-center py-2">
                 {/* Glow ring */}
                 <div
                   className="absolute inset-0 pointer-events-none"
@@ -226,14 +223,14 @@ export default function PacksPage() {
                   style={{ width: "45%", height: "45%", top: "27.5%", left: "27.5%", border: `1px solid ${pack.accentColor}15` }}
                 />
 
-                <div className="flex items-end justify-center gap-5 w-full px-2">
+                <div className="flex items-end justify-center gap-4 w-full px-2">
                   {previewCoins.map((coin, i) => {
                     const isCenter = i === 1;
                     return (
                       <motion.div
                         key={coin.id}
-                        className="flex flex-col items-center gap-2"
-                        style={{ marginBottom: isCenter ? 20 : 0, zIndex: isCenter ? 2 : 1 }}
+                        className="flex flex-col items-center gap-1.5"
+                        style={{ marginBottom: isCenter ? 16 : 0, zIndex: isCenter ? 2 : 1 }}
                         animate={{ y: [0, isCenter ? -8 : -5, 0] }}
                         transition={{
                           repeat: Infinity,
@@ -281,13 +278,13 @@ export default function PacksPage() {
                             </span>
                           </div>
                         ) : (
-                          <span className="text-[10px] font-bold text-white/35">{coin.name}</span>
+                          <span className="text-[10px] font-bold text-white/35 leading-tight text-center">{coin.name}</span>
                         )}
                       </motion.div>
                     );
                   })}
                 </div>
-                <p className="text-[9px] font-bold mt-2" style={{ color: `${pack.accentColor}55` }}>
+                <p className="text-[9px] font-bold mt-3" style={{ color: `${pack.accentColor}55` }}>
                   + {moreCount} more coins · 5 mystery boxes
                 </p>
               </div>
@@ -304,15 +301,15 @@ export default function PacksPage() {
         </AnimatePresence>
       </div>
 
-      {/* Swap Now button — outside the card so rounded corners never clip it */}
-      <div className="flex-shrink-0 px-4 pt-3 pb-3">
+      {/* Swap Now button */}
+      <div className="flex-shrink-0 px-4 pt-2.5 pb-3">
         <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.96 }}
           onClick={handleSwap}
           className="w-full rounded-2xl font-black text-base text-white flex items-center justify-center gap-2 relative overflow-hidden"
           style={{
-            height: 56,
+            height: 54,
             background: canAfford
               ? `linear-gradient(135deg, ${pack.accentColor} 0%, ${pack.accentColor}cc 100%)`
               : "rgba(255,255,255,0.06)",
