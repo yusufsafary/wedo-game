@@ -3,11 +3,14 @@ import { useId } from "react";
 interface WedoLogoProps {
   size?: number;
   className?: string;
-  glow?: boolean;
+  glowOpacity?: number;
 }
 
-export default function WedoLogo({ size = 32, className = "", glow = false }: WedoLogoProps) {
-  const id = useId().replace(/:/g, "");
+let counter = 0;
+
+export default function WedoLogo({ size = 32, className = "", glowOpacity = 0 }: WedoLogoProps) {
+  const uid = useId();
+  const r = `wl${uid.replace(/:/g, "")}`;
   return (
     <svg
       width={size}
@@ -19,21 +22,21 @@ export default function WedoLogo({ size = 32, className = "", glow = false }: We
       aria-label="WEDO"
     >
       <defs>
-        <linearGradient id={`stroke-${id}`} x1="4" y1="2" x2="36" y2="38" gradientUnits="userSpaceOnUse">
+        <linearGradient id={`stroke-${r}`} x1="4" y1="2" x2="36" y2="38" gradientUnits="userSpaceOnUse">
           <stop offset="0%" stopColor="#C4B5FD" />
           <stop offset="45%" stopColor="#8B5CF6" />
           <stop offset="100%" stopColor="#4F46E5" />
         </linearGradient>
-        <linearGradient id={`fill-${id}`} x1="4" y1="2" x2="36" y2="38" gradientUnits="userSpaceOnUse">
+        <linearGradient id={`fill-${r}`} x1="4" y1="2" x2="36" y2="38" gradientUnits="userSpaceOnUse">
           <stop offset="0%" stopColor="#180840" stopOpacity="0.95" />
           <stop offset="100%" stopColor="#080320" stopOpacity="0.95" />
         </linearGradient>
-        <linearGradient id={`w-${id}`} x1="10" y1="14" x2="30" y2="28" gradientUnits="userSpaceOnUse">
+        <linearGradient id={`w-${r}`} x1="10" y1="14" x2="30" y2="28" gradientUnits="userSpaceOnUse">
           <stop offset="0%" stopColor="#FFFFFF" />
           <stop offset="100%" stopColor="#C4B5FD" />
         </linearGradient>
-        {glow && (
-          <filter id={`glow-${id}`} x="-30%" y="-30%" width="160%" height="160%">
+        {glowOpacity > 0 && (
+          <filter id={`glow-${r}`} x="-30%" y="-30%" width="160%" height="160%">
             <feGaussianBlur stdDeviation="2.5" result="blur" />
             <feComposite in="SourceGraphic" in2="blur" operator="over" />
           </filter>
@@ -41,8 +44,8 @@ export default function WedoLogo({ size = 32, className = "", glow = false }: We
       </defs>
       <path
         d="M20 2L35.5 11V29L20 38L4.5 29V11L20 2Z"
-        fill={`url(#fill-${id})`}
-        stroke={`url(#stroke-${id})`}
+        fill={`url(#fill-${r})`}
+        stroke={`url(#stroke-${r})`}
         strokeWidth="1.6"
         strokeLinejoin="round"
       />
@@ -54,11 +57,11 @@ export default function WedoLogo({ size = 32, className = "", glow = false }: We
       />
       <path
         d="M10.5 15L14.2 26L20 19.5L25.8 26L29.5 15"
-        stroke={`url(#w-${id})`}
+        stroke={`url(#w-${r})`}
         strokeWidth="2.8"
         strokeLinecap="round"
         strokeLinejoin="round"
-        filter={glow ? `url(#glow-${id})` : undefined}
+        filter={glowOpacity > 0 ? `url(#glow-${r})` : undefined}
       />
     </svg>
   );

@@ -18,6 +18,78 @@ export const COINS: Coin[] = [
   { id: "lilagents", name: "lil Agents", symbol: "LLA", rank: 20, marketCap: "$6.2K", description: "Agents you can hire to work", tier: "common", color: "#EC4899", emoji: "🤖" },
 ];
 
+export const COIN_LOGOS: Record<string, string> = {
+  suzupay: "/logos/suzupay.jpg",
+  "avocado-ai": "/logos/avocado-ai.jpg",
+  "avatar-ui": "/logos/avatar-ui.jpg",
+  brain: "/logos/brain.jpg",
+  relaxsync: "/logos/relaxsync.jpg",
+  ordina: "/logos/ordina.jpg",
+  "degen-terminal": "/logos/degen-terminal.jpg",
+  inspirexgrowth: "/logos/inspirexgrowth.jpg",
+  aniverse: "/logos/aniverse.jpg",
+  redcircle: "/logos/redcircle.jpg",
+  feedrun: "/logos/feedrun.jpg",
+  whitespace: "/logos/whitespace.jpg",
+  "xscouter-ai": "/logos/xscouter-ai.jpg",
+  "cofounder-hunt": "/logos/cofounder-hunt.jpg",
+  lilagents: "/logos/lilagents.jpg",
+};
+
+export const COIN_ABBR: Record<string, string> = {
+  suzupay: "SZ",
+  "avocado-ai": "AV",
+  "avatar-ui": "AU",
+  brain: "BR",
+  relaxsync: "RX",
+  ordina: "OR",
+  "degen-terminal": "DG",
+  inspirexgrowth: "IX",
+  aniverse: "AN",
+  redcircle: "RC",
+  feedrun: "FR",
+  whitespace: "WS",
+  "xscouter-ai": "XS",
+  "cofounder-hunt": "CH",
+  lilagents: "LA",
+};
+
+export const COIN_BG_COLORS: Record<string, string> = {
+  suzupay: "#FF8C00",
+  "avocado-ai": "#16A34A",
+  "avatar-ui": "#7C3AED",
+  brain: "#DC2626",
+  relaxsync: "#4338CA",
+  ordina: "#0284C7",
+  "degen-terminal": "#D97706",
+  inspirexgrowth: "#0D9488",
+  aniverse: "#6D28D9",
+  redcircle: "#B91C1C",
+  feedrun: "#D97706",
+  whitespace: "#334155",
+  "xscouter-ai": "#059669",
+  "cofounder-hunt": "#1D4ED8",
+  lilagents: "#BE185D",
+};
+
+export const COIN_RADIUS: Record<string, string> = {
+  suzupay: "rounded-2xl",
+  "avocado-ai": "rounded-full",
+  "avatar-ui": "rounded-2xl",
+  brain: "rounded-2xl",
+  relaxsync: "rounded-2xl",
+  ordina: "rounded-2xl",
+  "degen-terminal": "rounded-2xl",
+  inspirexgrowth: "rounded-2xl",
+  aniverse: "rounded-2xl",
+  redcircle: "rounded-2xl",
+  feedrun: "rounded-xl",
+  whitespace: "rounded-2xl",
+  "xscouter-ai": "rounded-2xl",
+  "cofounder-hunt": "rounded-2xl",
+  lilagents: "rounded-2xl",
+};
+
 export const TIER_COLORS: Record<string, string> = {
   common: "#94A3B8",
   uncommon: "#34D399",

@@ -1,47 +1,49 @@
-import { Switch, Route, Router as WouterRouter } from "wouter";
+import { Switch, Route, Router as WouterRouter, useLocation, Redirect } from "wouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Toaster } from "sonner";
 import { GameProvider } from "./context/GameContext";
-import TopBar from "./components/TopBar";
-import BottomNav from "./components/BottomNav";
-import HomePage from "./pages/HomePage";
-import ShopPage from "./pages/ShopPage";
+import AppLayout from "./components/AppLayout";
+import LoginPage from "./pages/LoginPage";
+import PacksPage from "./pages/PacksPage";
+import SwapPage from "./pages/SwapPage";
 import CollectionPage from "./pages/CollectionPage";
-import InfoPage from "./pages/InfoPage";
+import AboutPage from "./pages/AboutPage";
+import ProfilePage from "./pages/ProfilePage";
 
 const queryClient = new QueryClient();
 
-function NotFound() {
-  return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="text-center">
-        <p className="text-5xl mb-4">🌌</p>
-        <p className="text-white text-lg font-bold">Page not found</p>
-      </div>
-    </div>
-  );
+function isLoggedIn(): boolean {
+  return localStorage.getItem("wedo_username") !== null;
 }
 
-function Layout({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="min-h-screen bg-[#080318]">
-      <TopBar />
-      <main className="pb-24">{children}</main>
-      <BottomNav />
-    </div>
-  );
+function RequireAuth({ children }: { children: React.ReactNode }) {
+  const [location] = useLocation();
+  if (!isLoggedIn() && location !== "/login") {
+    return <Redirect to="/login" />;
+  }
+  return <>{children}</>;
 }
 
-function Router() {
+function AppRoutes() {
   return (
-    <Layout>
-      <Switch>
-        <Route path="/" component={HomePage} />
-        <Route path="/shop" component={ShopPage} />
-        <Route path="/collection" component={CollectionPage} />
-        <Route path="/info" component={InfoPage} />
-        <Route component={NotFound} />
-      </Switch>
-    </Layout>
+    <Switch>
+      <Route path="/login" component={LoginPage} />
+      <Route>
+        <RequireAuth>
+          <AppLayout>
+            <Switch>
+              <Route path="/" component={PacksPage} />
+              <Route path="/swap/:packId" component={SwapPage} />
+              <Route path="/swap" component={() => <Redirect to="/" />} />
+              <Route path="/collection" component={CollectionPage} />
+              <Route path="/about" component={AboutPage} />
+              <Route path="/profile" component={ProfilePage} />
+              <Route component={() => <Redirect to="/" />} />
+            </Switch>
+          </AppLayout>
+        </RequireAuth>
+      </Route>
+    </Switch>
   );
 }
 
@@ -49,9 +51,10 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <GameProvider>
-        <WouterRouter base={""}>
-          <Router />
+        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+          <AppRoutes />
         </WouterRouter>
+        <Toaster position="top-center" theme="dark" />
       </GameProvider>
     </QueryClientProvider>
   );

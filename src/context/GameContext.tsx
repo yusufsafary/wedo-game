@@ -27,7 +27,7 @@ function addToCollection(collection: CollectionEntry[], coinId: string): Collect
   return [...collection, { coinId, count: 1, firstObtained: Date.now() }];
 }
 
-function rollCoin(pack: Pack): Coin {
+export function rollCoin(pack: Pack): Coin {
   const roll = Math.random() * 100;
   let tier: "common" | "uncommon" | "rare" | "legendary";
   if (roll < pack.odds.legendary) tier = "legendary";
@@ -38,14 +38,14 @@ function rollCoin(pack: Pack): Coin {
   return pool[Math.floor(Math.random() * pool.length)];
 }
 
-export function openPack(pack: Pack): Coin[] {
+export function generateBoxCoins(pack: Pack): Coin[] {
   return Array.from({ length: 5 }, () => rollCoin(pack));
 }
 
 interface GameContextValue {
   state: GameState;
   spendWedo: (amount: number) => boolean;
-  addCoinsToCollection: (coins: Coin[]) => void;
+  addCoinToCollection: (coinId: string) => void;
   incrementSwaps: () => void;
   setLastPackId: (id: string) => void;
   resetGame: () => void;
@@ -66,14 +66,11 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     return true;
   };
 
-  const addCoinsToCollection = (coins: Coin[]) => {
-    setState((s) => {
-      let col = s.collection;
-      for (const coin of coins) {
-        col = addToCollection(col, coin.id);
-      }
-      return { ...s, collection: col };
-    });
+  const addCoinToCollection = (coinId: string) => {
+    setState((s) => ({
+      ...s,
+      collection: addToCollection(s.collection, coinId),
+    }));
   };
 
   const incrementSwaps = () => {
@@ -89,7 +86,9 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <GameContext.Provider value={{ state, spendWedo, addCoinsToCollection, incrementSwaps, setLastPackId, resetGame }}>
+    <GameContext.Provider
+      value={{ state, spendWedo, addCoinToCollection, incrementSwaps, setLastPackId, resetGame }}
+    >
       {children}
     </GameContext.Provider>
   );
