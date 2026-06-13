@@ -37,7 +37,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
 
   return (
     <div
-      className="w-full max-w-[430px] flex flex-col relative overflow-hidden"
+      className="w-full max-w-[430px] flex flex-col"
       style={{
         background: "linear-gradient(180deg, #070012 0%, #040009 50%, #020006 100%)",
         borderLeft: "1px solid rgba(255,255,255,0.04)",
@@ -48,7 +48,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
     >
       {/* Header */}
       <header
-        className="sticky top-0 z-50 px-5 py-3 flex items-center justify-between flex-shrink-0"
+        className="z-50 px-5 py-3 flex items-center justify-between flex-shrink-0"
         style={{
           background: "rgba(7,0,18,0.85)",
           backdropFilter: "blur(20px)",
@@ -91,16 +91,18 @@ export default function AppLayout({ children }: AppLayoutProps) {
       </header>
 
       {/* Main content */}
-      <main className="flex-1 overflow-y-auto pb-[72px] scroll-smooth no-scrollbar">
+      <main className="flex-1 overflow-y-auto scroll-smooth no-scrollbar" style={{ minHeight: 0 }}>
         {children}
       </main>
 
-      {/* Bottom nav */}
+      {/* Bottom nav — in flex flow so it's never hidden behind system bars */}
       <nav
-        className="absolute bottom-0 w-full flex items-center justify-around px-1 pt-2 pb-safe flex-shrink-0"
+        className="flex-shrink-0 w-full flex items-center justify-around px-1"
         style={{
-          height: 68,
-          background: "rgba(5,0,14,0.92)",
+          paddingTop: 10,
+          paddingBottom: "max(env(safe-area-inset-bottom, 0px), 10px)",
+          minHeight: 62,
+          background: "rgba(5,0,14,0.96)",
           backdropFilter: "blur(24px)",
           WebkitBackdropFilter: "blur(24px)",
           borderTop: "1px solid rgba(255,255,255,0.05)",
