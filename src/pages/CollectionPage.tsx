@@ -168,7 +168,7 @@ export default function CollectionPage() {
   }
 
   return (
-    <div className="flex flex-col">
+    <div className="flex-1 overflow-y-auto no-scrollbar">
       {/* Header */}
       <div
         className="px-5 pt-5 pb-4 relative overflow-hidden"

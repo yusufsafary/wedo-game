@@ -67,7 +67,7 @@ export default function PacksPage() {
   const moreCount = pack.id === "basic" ? 9 : pack.id === "mystery" ? 12 : 5;
 
   return (
-    <div className="flex flex-col h-full select-none overflow-hidden">
+    <div className="flex-1 flex flex-col min-h-0 overflow-hidden select-none">
       {/* Pack tab buttons */}
       <div className="flex gap-2 px-4 pt-4 pb-3 overflow-x-auto no-scrollbar flex-shrink-0">
         {PACKS.map((p, i) => (
@@ -143,7 +143,7 @@ export default function PacksPage() {
             />
 
             {/* Content */}
-            <div className="relative z-30 flex flex-col h-full px-5 pt-5 pb-5 gap-0">
+            <div className="relative z-30 flex flex-col h-full px-5 pt-5 pb-6 gap-0">
               {/* Tag + Cost */}
               <div className="flex items-center justify-between flex-shrink-0 mb-3">
                 {pack.tag ? (
@@ -292,50 +292,51 @@ export default function PacksPage() {
               </div>
 
               {/* Drop rates */}
-              <div className="flex-shrink-0 flex gap-2 mb-3">
+              <div className="flex-shrink-0 flex gap-2 px-1">
                 <OddsBar label="COM" value={pack.odds.common} color={TIER_COLORS.common} />
                 <OddsBar label="UNC" value={pack.odds.uncommon} color={TIER_COLORS.uncommon} />
                 <OddsBar label="RAR" value={pack.odds.rare} color={TIER_COLORS.rare} />
                 <OddsBar label="LEG" value={pack.odds.legendary} color={TIER_COLORS.legendary} />
               </div>
-
-              {/* Swap button */}
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.96 }}
-                onClick={handleSwap}
-                className="flex-shrink-0 w-full rounded-2xl font-black text-base text-white flex items-center justify-center gap-2 relative overflow-hidden"
-                style={{
-                  height: 56,
-                  background: canAfford
-                    ? `linear-gradient(135deg, ${pack.accentColor} 0%, ${pack.accentColor}cc 100%)`
-                    : "rgba(255,255,255,0.06)",
-                  boxShadow: canAfford ? `0 4px 24px ${pack.glowColor}` : "none",
-                  color: canAfford ? "#fff" : "rgba(255,255,255,0.25)",
-                  border: canAfford ? "none" : "1px solid rgba(255,255,255,0.08)",
-                  cursor: canAfford ? "pointer" : "not-allowed",
-                }}
-              >
-                {canAfford && (
-                  <div
-                    className="absolute inset-0 pointer-events-none"
-                    style={{
-                      background:
-                        "linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.18) 50%, transparent 70%)",
-                      backgroundSize: "200% 100%",
-                      animation: "btnShimmer 2s ease-in-out infinite",
-                    }}
-                  />
-                )}
-                <span className="relative z-10">
-                  {canAfford ? `Swap Now · ${pack.cost} W` : `Need ${pack.cost} W`}
-                </span>
-              </motion.button>
             </div>
           </motion.div>
         </AnimatePresence>
       </div>
-      <div className="flex-shrink-0 h-4" />
+
+      {/* Swap Now button — outside the card so rounded corners never clip it */}
+      <div className="flex-shrink-0 px-4 pt-3 pb-3">
+        <motion.button
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.96 }}
+          onClick={handleSwap}
+          className="w-full rounded-2xl font-black text-base text-white flex items-center justify-center gap-2 relative overflow-hidden"
+          style={{
+            height: 56,
+            background: canAfford
+              ? `linear-gradient(135deg, ${pack.accentColor} 0%, ${pack.accentColor}cc 100%)`
+              : "rgba(255,255,255,0.06)",
+            boxShadow: canAfford ? `0 4px 24px ${pack.glowColor}` : "none",
+            color: canAfford ? "#fff" : "rgba(255,255,255,0.25)",
+            border: canAfford ? "none" : "1px solid rgba(255,255,255,0.08)",
+            cursor: canAfford ? "pointer" : "not-allowed",
+          }}
+        >
+          {canAfford && (
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background:
+                  "linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.18) 50%, transparent 70%)",
+                backgroundSize: "200% 100%",
+                animation: "btnShimmer 2s ease-in-out infinite",
+              }}
+            />
+          )}
+          <span className="relative z-10">
+            {canAfford ? `Swap Now · ${pack.cost === 0 ? "FREE" : `${pack.cost} W`}` : `Need ${pack.cost} W`}
+          </span>
+        </motion.button>
+      </div>
     </div>
   );
 }

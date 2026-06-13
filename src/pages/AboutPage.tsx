@@ -86,7 +86,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 
 export default function AboutPage() {
   return (
-    <div className="flex flex-col gap-0">
+    <div className="flex-1 overflow-y-auto no-scrollbar flex flex-col gap-0">
       {/* Hero */}
       <section
         className="relative flex flex-col items-center justify-center px-6 py-12 overflow-hidden"

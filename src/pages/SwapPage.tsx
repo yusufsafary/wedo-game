@@ -308,7 +308,7 @@ export default function SwapPage() {
   if (!pack) return null;
 
   return (
-    <div className="flex flex-col h-full relative overflow-hidden">
+    <div className="flex-1 flex flex-col relative overflow-hidden">
       {/* Flash overlay */}
       <AnimatePresence>
         {flash && (

@@ -88,6 +88,7 @@ export default function ProfilePage() {
   const tierLabel = crownJewel ? TIER_LABELS[crownJewel.tier] : "";
 
   return (
+    <div className="flex-1 overflow-y-auto no-scrollbar">
     <div className="px-5 py-5 flex flex-col gap-5 pb-6">
       {/* User avatar + name */}
       <motion.div
@@ -342,6 +343,7 @@ export default function ProfilePage() {
           WEDO v1.0 · Beta · {uniqueCoins}/{COINS.length} Coins
         </p>
       </motion.div>
+    </div>
     </div>
   );
 }
