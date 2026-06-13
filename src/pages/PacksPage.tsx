@@ -142,41 +142,40 @@ export default function PacksPage() {
               }}
             />
 
-            {/* Content */}
-            <div className="relative z-30 flex flex-col h-full px-5 pt-5 pb-6 gap-0">
-              {/* Tag + Cost */}
-              <div className="flex items-center justify-between flex-shrink-0 mb-3">
-                {pack.tag ? (
+            {/* Content — justify-between distributes space evenly between 3 sections */}
+            <div className="relative z-30 flex flex-col h-full px-6 pt-5 pb-5 justify-between">
+
+              {/* TOP: Tag + Cost + Series + Name grouped together */}
+              <div className="flex-shrink-0">
+                <div className="flex items-center justify-between mb-3">
+                  {pack.tag ? (
+                    <div
+                      className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest"
+                      style={{
+                        color: pack.accentColor,
+                        border: `1px solid ${pack.accentColor}55`,
+                        background: `${pack.accentColor}18`,
+                      }}
+                    >
+                      {pack.tag}
+                    </div>
+                  ) : (
+                    <div />
+                  )}
                   <div
-                    className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest"
+                    className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl font-black"
                     style={{
-                      color: pack.accentColor,
-                      border: `1px solid ${pack.accentColor}55`,
-                      background: `${pack.accentColor}18`,
+                      background: `${pack.accentColor}22`,
+                      border: `1.5px solid ${pack.accentColor}60`,
+                      color: "#fff",
+                      boxShadow: `0 2px 16px ${pack.glowColor}`,
+                      fontSize: 13,
                     }}
                   >
-                    {pack.tag}
+                    <span style={{ color: pack.accentColor, fontSize: 11 }}>⚡</span>
+                    <span>{pack.cost === 0 ? "FREE" : `${pack.cost.toLocaleString()} W`}</span>
                   </div>
-                ) : (
-                  <div />
-                )}
-                <div
-                  className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl font-black"
-                  style={{
-                    background: `${pack.accentColor}22`,
-                    border: `1.5px solid ${pack.accentColor}60`,
-                    color: "#fff",
-                    boxShadow: `0 2px 16px ${pack.glowColor}`,
-                    fontSize: 13,
-                  }}
-                >
-                  <span style={{ color: pack.accentColor, fontSize: 11 }}>⚡</span>
-                  <span>{pack.cost === 0 ? "FREE" : `${pack.cost.toLocaleString()} W`}</span>
                 </div>
-              </div>
-
-              {/* Series + Name */}
-              <div className="flex-shrink-0 mb-1">
                 <p
                   className="font-black uppercase tracking-[0.3em] mb-1.5"
                   style={{ color: `${pack.accentColor}75`, fontSize: 9 }}
@@ -188,7 +187,7 @@ export default function PacksPage() {
                   style={{
                     fontFamily: "var(--app-font-display)",
                     fontWeight: 800,
-                    fontSize: "clamp(38px,9vw,52px)",
+                    fontSize: "clamp(36px,9vw,52px)",
                     textShadow: `0 0 40px ${pack.accentColor}50`,
                     letterSpacing: "-0.02em",
                   }}
@@ -197,14 +196,15 @@ export default function PacksPage() {
                 </h1>
               </div>
 
-              {/* Preview coins */}
-              <div className="flex-1 relative flex flex-col items-center justify-center min-h-0">
+              {/* MIDDLE: Preview coins — fixed height, no flex-1 */}
+              <div
+                className="flex-shrink-0 relative flex flex-col items-center justify-center"
+                style={{ height: "clamp(180px, 36vh, 260px)" }}
+              >
                 {/* Glow ring */}
                 <div
-                  className="absolute pointer-events-none"
+                  className="absolute inset-0 pointer-events-none"
                   style={{
-                    width: "85%",
-                    height: "85%",
                     borderRadius: "50%",
                     background: `radial-gradient(ellipse at 50% 45%, ${pack.accentColor}30 0%, ${pack.accentColor}08 45%, transparent 70%)`,
                     filter: "blur(18px)",
@@ -213,15 +213,17 @@ export default function PacksPage() {
                 <div
                   className="absolute pointer-events-none rounded-full"
                   style={{
-                    width: "65%",
-                    height: "65%",
+                    width: "70%",
+                    height: "70%",
+                    top: "15%",
+                    left: "15%",
                     border: `1px solid ${pack.accentColor}20`,
                     boxShadow: `0 0 30px ${pack.accentColor}15, inset 0 0 30px ${pack.accentColor}08`,
                   }}
                 />
                 <div
                   className="absolute pointer-events-none rounded-full"
-                  style={{ width: "45%", height: "45%", border: `1px solid ${pack.accentColor}15` }}
+                  style={{ width: "45%", height: "45%", top: "27.5%", left: "27.5%", border: `1px solid ${pack.accentColor}15` }}
                 />
 
                 <div className="flex items-end justify-center gap-5 w-full px-2">
@@ -231,7 +233,7 @@ export default function PacksPage() {
                       <motion.div
                         key={coin.id}
                         className="flex flex-col items-center gap-2"
-                        style={{ marginBottom: isCenter ? 24 : 0, zIndex: isCenter ? 2 : 1 }}
+                        style={{ marginBottom: isCenter ? 20 : 0, zIndex: isCenter ? 2 : 1 }}
                         animate={{ y: [0, isCenter ? -8 : -5, 0] }}
                         transition={{
                           repeat: Infinity,
@@ -246,7 +248,6 @@ export default function PacksPage() {
                             size={isCenter ? "xl" : "lg"}
                             showGlow={coin.tier === "legendary" || coin.tier === "rare"}
                           />
-                          {/* Mystery pack legendary coin blur */}
                           {pack.id === "mystery" && coin.tier === "legendary" && (
                             <div
                               className="absolute inset-0 flex items-center justify-center"
@@ -286,13 +287,13 @@ export default function PacksPage() {
                     );
                   })}
                 </div>
-                <p className="text-[9px] font-bold mt-1" style={{ color: `${pack.accentColor}55` }}>
+                <p className="text-[9px] font-bold mt-2" style={{ color: `${pack.accentColor}55` }}>
                   + {moreCount} more coins · 5 mystery boxes
                 </p>
               </div>
 
-              {/* Drop rates */}
-              <div className="flex-shrink-0 flex gap-2 px-1">
+              {/* BOTTOM: Drop rates */}
+              <div className="flex-shrink-0 flex gap-2">
                 <OddsBar label="COM" value={pack.odds.common} color={TIER_COLORS.common} />
                 <OddsBar label="UNC" value={pack.odds.uncommon} color={TIER_COLORS.uncommon} />
                 <OddsBar label="RAR" value={pack.odds.rare} color={TIER_COLORS.rare} />
