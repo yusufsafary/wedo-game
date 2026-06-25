@@ -97,7 +97,7 @@ function CoinReveal({ coin }: { coin: Coin }) {
             className="text-[10px] font-mono font-black px-2 py-0.5 rounded"
             style={{ background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.35)" }}
           >
-            #{coin.rank} orynth.dev
+            #{coin.rank}
           </span>
         </div>
         <h2
